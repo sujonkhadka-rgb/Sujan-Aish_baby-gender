@@ -1,0 +1,385 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg1: #fff4f7;
+  --bg2: #f4f8ff;
+  --card: rgba(255, 255, 255, 0.88);
+  --text: #2f2f3a;
+  --muted: #6d7280;
+  --boy: #5aa9ff;
+  --boy-dark: #2f7de1;
+  --girl: #ff86b7;
+  --girl-dark: #eb4d92;
+  --shadow: 0 16px 50px rgba(45, 56, 87, 0.12);
+  --radius: 24px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.page-bg::before,
+.page-bg::after {
+  content: "";
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  z-index: 0;
+}
+
+.page-bg::before {
+  background: var(--girl);
+  top: -80px;
+  left: -70px;
+}
+
+.page-bg::after {
+  background: var(--boy);
+  right: -70px;
+  bottom: -80px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 18px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 22px;
+}
+
+.hero-images {
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  align-items: center;
+  gap: 20px;
+}
+
+.hero-center {
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.7rem;
+  line-height: 1.1;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin: 14px auto 0;
+  max-width: 650px;
+}
+
+.hero-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.vote-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 1.4rem;
+}
+
+.label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  border-radius: 14px;
+  border: 2px solid #dfe4ef;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: #8bb8ff;
+  box-shadow: 0 0 0 4px rgba(90, 169, 255, 0.12);
+}
+
+.hint {
+  color: var(--muted);
+  margin: 10px 0 18px;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.vote-btn {
+  border: none;
+  border-radius: 18px;
+  padding: 18px 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.vote-btn:hover {
+  transform: translateY(-2px);
+}
+
+.vote-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.boy-btn {
+  background: linear-gradient(135deg, var(--boy), var(--boy-dark));
+  box-shadow: 0 10px 22px rgba(47, 125, 225, 0.25);
+}
+
+.girl-btn {
+  background: linear-gradient(135deg, var(--girl), var(--girl-dark));
+  box-shadow: 0 10px 22px rgba(235, 77, 146, 0.25);
+}
+
+.message {
+  margin-top: 18px;
+  min-height: 24px;
+  font-weight: bold;
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.score-box {
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+}
+
+.boy-box {
+  background: rgba(90, 169, 255, 0.12);
+}
+
+.girl-box {
+  background: rgba(255, 134, 183, 0.12);
+}
+
+.score-label {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.score-value {
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.score-sub {
+  color: var(--muted);
+}
+
+.bar-wrap {
+  margin-top: 18px;
+}
+
+.bar {
+  width: 100%;
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  background: #edf1f8;
+}
+
+.bar-boy {
+  background: linear-gradient(90deg, var(--boy), var(--boy-dark));
+  transition: width 0.3s ease;
+}
+
+.bar-girl {
+  background: linear-gradient(90deg, var(--girl), var(--girl-dark));
+  transition: width 0.3s ease;
+}
+
+.total-votes {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.guesses-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.guesses-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.guesses-list {
+  display: grid;
+  gap: 12px;
+}
+
+.guess-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #f8faff;
+  border: 1px solid #e8edf7;
+}
+
+.guess-name {
+  font-weight: bold;
+  word-break: break-word;
+}
+
+.guess-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  color: white;
+  font-weight: bold;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.tag-boy {
+  background: var(--boy-dark);
+}
+
+.tag-girl {
+  background: var(--girl-dark);
+}
+
+.time-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 12px;
+}
+
+.confetti {
+  position: fixed;
+  top: -12px;
+  width: 10px;
+  height: 14px;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0.15;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-images {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-img {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .vote-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .button-row,
+  .score-grid,
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .guess-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

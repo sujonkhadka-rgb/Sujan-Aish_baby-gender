@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baby Gender Guess</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <main class="container">
+    <section class="hero card">
+      <div class="hero-images">
+        <img src="images/baby-left.jpg" alt="Baby theme left" class="hero-img" />
+        <div class="hero-center">
+          <p class="eyebrow">Baby Prediction Game</p>
+          <h1>What do you think baby will be?</h1>
+          <p class="subtitle">
+            Pick a team, cast your vote, and see the live results update instantly.
+          </p>
+        </div>
+        <img src="images/baby-right.jpg" alt="Baby theme right" class="hero-img" />
+      </div>
+    </section>
+
+    <section class="vote-grid">
+      <div class="card vote-card">
+        <h2>Make Your Guess</h2>
+
+        <label for="nameInput" class="label">Your name</label>
+        <input
+          id="nameInput"
+          type="text"
+          maxlength="40"
+          placeholder="Enter your name"
+          autocomplete="name"
+        />
+
+        <p class="hint">Each name can vote once only.</p>
+
+        <div class="button-row">
+          <button id="boyBtn" class="vote-btn boy-btn">💙 Team Boy</button>
+          <button id="girlBtn" class="vote-btn girl-btn">💖 Team Girl</button>
+        </div>
+
+        <div id="message" class="message" aria-live="polite"></div>
+      </div>
+
+      <div class="card results-card">
+        <h2>Live Results</h2>
+
+        <div class="score-grid">
+          <div class="score-box boy-box">
+            <div class="score-label">💙 Team Boy</div>
+            <div id="boyCount" class="score-value">0</div>
+            <div id="boyPercent" class="score-sub">0%</div>
+          </div>
+
+          <div class="score-box girl-box">
+            <div class="score-label">💖 Team Girl</div>
+            <div id="girlCount" class="score-value">0</div>
+            <div id="girlPercent" class="score-sub">0%</div>
+          </div>
+        </div>
+
+        <div class="bar-wrap">
+          <div class="bar">
+            <div id="boyBar" class="bar-boy" style="width: 50%"></div>
+            <div id="girlBar" class="bar-girl" style="width: 50%"></div>
+          </div>
+        </div>
+
+        <p id="totalVotes" class="total-votes">0 total votes</p>
+      </div>
+    </section>
+
+    <section class="card gallery-card">
+      <h2>Baby Love</h2>
+      <div class="gallery">
+        <img src="images/gallery-1.jpg" alt="Baby gallery 1" />
+        <img src="images/gallery-2.jpg" alt="Baby gallery 2" />
+        <img src="images/gallery-3.jpg" alt="Baby gallery 3" />
+      </div>
+    </section>
+
+    <section class="card guesses-card">
+      <div class="guesses-header">
+        <h2>Recent Guesses</h2>
+        <p>Live from your guests</p>
+      </div>
+      <div id="guessesList" class="guesses-list"></div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
