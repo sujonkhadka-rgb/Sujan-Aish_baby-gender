@@ -436,3 +436,75 @@ img {
     max-width: 180px;
   }
 }
+
+.guesses-list {
+  display: grid;
+  gap: 12px;
+}
+
+.guess-item {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.guess-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.tag-boy {
+  background: rgba(90, 169, 255, 0.14);
+  color: var(--boy-dark);
+}
+
+.tag-girl {
+  background: rgba(255, 134, 183, 0.14);
+  color: var(--girl-dark);
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 16px;
+}
+
+@media (max-width: 900px) {
+  .hero-images {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-img {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .vote-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .button-row {
+    grid-template-columns: 1fr;
+  }
+}
