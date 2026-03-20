@@ -6,21 +6,10 @@ import {
   collection,
   query,
   orderBy,
-  onSnapshot
+  onSnapshot,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-/*
-  1) Replace this config with your own Firebase config
-  2) Keep the collection name as "guesses" unless you want to change it
-*/
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCUeKrcKN1xauDXcf1c4nhn9-FtrPQ5IZM",
   authDomain: "sujan-aish.firebaseapp.com",
@@ -30,10 +19,6 @@ const firebaseConfig = {
   appId: "1:715732056924:web:499137b96d409887755f99",
   measurementId: "G-B8LN8Q1HST"
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -126,7 +111,7 @@ async function submitGuess(choice) {
         name: cleanName,
         normalizedName: normalized,
         guess: choice,
-        createdAt: new Date()
+        createdAt: serverTimestamp()
       });
     });
 
@@ -139,10 +124,11 @@ async function submitGuess(choice) {
     nameInput.value = "";
     createConfetti();
   } catch (error) {
+    console.error("Vote save error:", error);
+
     if (error.message === "duplicate-name") {
       showMessage("That name has already been used for a vote.", true);
     } else {
-      console.error(error);
       showMessage("Something went wrong while saving the vote.", true);
     }
   } finally {
@@ -155,44 +141,55 @@ girlBtn.addEventListener("click", () => submitGuess("Girl"));
 
 const guessesQuery = query(collection(db, "guesses"), orderBy("createdAt", "desc"));
 
-onSnapshot(guessesQuery, (snapshot) => {
-  const guesses = snapshot.docs.map((docSnap) => docSnap.data());
+onSnapshot(
+  guessesQuery,
+  (snapshot) => {
+    const guesses = snapshot.docs
+      .map((docSnap) => docSnap.data())
+      .filter((g) => g.name && g.guess);
 
-  const boyCount = guesses.filter((g) => g.guess === "Boy").length;
-  const girlCount = guesses.filter((g) => g.guess === "Girl").length;
-  const total = boyCount + girlCount;
+    const boyCount = guesses.filter((g) => g.guess === "Boy").length;
+    const girlCount = guesses.filter((g) => g.guess === "Girl").length;
+    const total = boyCount + girlCount;
 
-  const boyPercent = total ? Math.round((boyCount / total) * 100) : 0;
-  const girlPercent = total ? Math.round((girlCount / total) * 100) : 0;
+    const boyPercent = total ? Math.round((boyCount / total) * 100) : 0;
+    const girlPercent = total ? Math.round((girlCount / total) * 100) : 0;
 
-  boyCountEl.textContent = boyCount;
-  girlCountEl.textContent = girlCount;
-  boyPercentEl.textContent = `${boyPercent}%`;
-  girlPercentEl.textContent = `${girlPercent}%`;
+    boyCountEl.textContent = boyCount;
+    girlCountEl.textContent = girlCount;
+    boyPercentEl.textContent = `${boyPercent}%`;
+    girlPercentEl.textContent = `${girlPercent}%`;
 
-  boyBarEl.style.width = `${boyPercent}%`;
-  girlBarEl.style.width = `${girlPercent}%`;
+    boyBarEl.style.width = `${boyPercent}%`;
+    girlBarEl.style.width = `${girlPercent}%`;
 
-  totalVotesEl.textContent = `${total} total vote${total === 1 ? "" : "s"}`;
+    totalVotesEl.textContent = `${total} total vote${total === 1 ? "" : "s"}`;
 
-  if (!guesses.length) {
-    guessesListEl.innerHTML = `<div class="empty">No votes yet — be the first!</div>`;
-    return;
-  }
+    if (!guesses.length) {
+      guessesListEl.innerHTML = `<div class="empty">No votes yet — be the first!</div>`;
+      return;
+    }
 
-  guessesListEl.innerHTML = guesses
-    .slice(0, 20)
-    .map((entry) => {
-      const tagClass = entry.guess === "Boy" ? "tag-boy" : "tag-girl";
-      return `
-        <div class="guess-item">
-          <div class="guess-name">${escapeHtml(entry.name)}</div>
-          <div class="guess-meta">
-            <span class="tag ${tagClass}">${entry.guess === "Boy" ? "💙 Team Boy" : "💖 Team Girl"}</span>
-            <span class="time-text">${formatTime(entry.createdAt)}</span>
+    guessesListEl.innerHTML = guesses
+      .slice(0, 20)
+      .map((entry) => {
+        const tagClass = entry.guess === "Boy" ? "tag-boy" : "tag-girl";
+        return `
+          <div class="guess-item">
+            <div class="guess-name">${escapeHtml(entry.name)}</div>
+            <div class="guess-meta">
+              <span class="tag ${tagClass}">
+                ${entry.guess === "Boy" ? "💙 Team Boy" : "💖 Team Girl"}
+              </span>
+              <span class="time-text">${formatTime(entry.createdAt)}</span>
+            </div>
           </div>
-        </div>
-      `;
-    })
-    .join("");
-});
+        `;
+      })
+      .join("");
+  },
+  (error) => {
+    console.error("Live update error:", error);
+    showMessage("Could not load live results.", true);
+  }
+);
